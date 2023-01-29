@@ -1,45 +1,43 @@
-using ContosoPizza.Models;
+using example.Interfaces;
+using Example.Models;
 
-namespace ContosoPizza.Services;
+namespace Example.Services;
 
-public static class PizzaService
+public class PizzaService : IPizzaServiceInterface
 {
-    static List<Pizza> Pizzas { get; }
-    static int nextId = 3;
-    static PizzaService()
+    private readonly MySQLDBContext _dbContext;  
+    
+    public PizzaService(MySQLDBContext context)
     {
-        Pizzas = new List<Pizza>
-        {
-            new Pizza { Id = 1, Name = "Classic Italian", IsGlutenFree = false },
-            new Pizza { Id = 2, Name = "Veggie", IsGlutenFree = true }
-        };
+        _dbContext = context;  
     }
 
-    public static List<Pizza> GetAll() => Pizzas;
-
-    public static Pizza? Get(int id) => Pizzas.FirstOrDefault(p => p.Id == id);
-
-    public static void Add(Pizza pizza)
+    public List<Pizza> GetAll()
     {
-        pizza.Id = nextId++;
-        Pizzas.Add(pizza);
+        return this._dbContext.Pizza.ToList();
     }
 
-    public static void Delete(int id)
+    public Pizza? GetOne(int id)
     {
-        var pizza = Get(id);
+        return this._dbContext.Pizza.FirstOrDefault();
+    }
+
+    public Pizza Add(Pizza pizza)
+    { 
+        var newPizza = new Pizza { Name = pizza.Name, IsGlutenFree = pizza.IsGlutenFree };
+       this._dbContext.Pizza.Add(newPizza);
+       this._dbContext.SaveChanges();
+       return newPizza;
+    }
+
+    public void Delete(int id)
+    {
+        var pizza = this.GetOne(id);
         if(pizza is null)
             return;
-
-        Pizzas.Remove(pizza);
     }
 
-    public static void Update(Pizza pizza)
+    public void Update(Pizza pizza)
     {
-        var index = Pizzas.FindIndex(p => p.Id == pizza.Id);
-        if(index == -1)
-            return;
-
-        Pizzas[index] = pizza;
     }
 }

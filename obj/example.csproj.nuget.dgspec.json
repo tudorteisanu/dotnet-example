@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/theo/projects/dotnet/example/example.csproj": {}
+    "/app/example.csproj": {}
   },
   "projects": {
-    "/home/theo/projects/dotnet/example/example.csproj": {
+    "/app/example.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/theo/projects/dotnet/example/example.csproj",
+        "projectUniqueName": "/app/example.csproj",
         "projectName": "example",
-        "projectPath": "/home/theo/projects/dotnet/example/example.csproj",
-        "packagesPath": "/home/theo/.nuget/packages/",
-        "outputPath": "/home/theo/projects/dotnet/example/obj/",
+        "projectPath": "/app/example.csproj",
+        "packagesPath": "/root/.nuget/packages/",
+        "outputPath": "/app/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/theo/.nuget/NuGet/NuGet.Config"
+          "/root/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -42,6 +42,20 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
@@ -53,7 +67,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -65,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.113/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.405/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  webapp:
+    image: 'mcr.microsoft.com/dotnet/sdk:6.0'
+    ports:
+      - "3000:80"
+      - "3001:443"
+    volumes:
+      - ./:/app:delegated
+    command: dotnet watch --project ./app run --urls "http://0.0.0.0:80"
+    depends_on:
+      - db
+    links:
+      - 'db:db'
+    
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: testPass123
+      MYSQL_DATABASE: dotnet
+      MYSQL_USER: dotnet
+      MYSQL_PASSWORD: testPass123
+    ports:
+      -  "3306:3306"

@@ -1,5 +1,7 @@
-using ContosoPizza.Models;
-using ContosoPizza.Services;
+using System.Text.Json;
+using example.Interfaces;
+using Example.Models;
+using Example.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,38 +9,44 @@ namespace Example.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
+// [Authorize]
 public class PizzaController : ControllerBase
 {
-    public PizzaController()
-    {
-    }
-
-    // GET all action
+    
+    private readonly IPizzaServiceInterface _service;  
+  
+    public PizzaController(IPizzaServiceInterface service)  
+    {  
+        _service = service;  
+    }  
+  
     [HttpGet]
     [AllowAnonymous]
-    public ActionResult<List<Pizza>> GetAll() {
-        return PizzaService.GetAll();
+    public IList<Pizza> Get()  
+    {  
+        return this._service.GetAll();  
     }
-
+    
     // GET by Id action
     [HttpGet("{id}")]
-    public ActionResult<Pizza> Get(int id)
-    {
-        var pizza = PizzaService.Get(id);
+    public ActionResult<Pizza?> Get(int id)
+    {   
+        var pizza = this._service.GetOne(id);
 
-        if(pizza == null)
+        if (pizza == null)
+        {
             return NotFound();
+        }
 
         return pizza;
     }
 
     // POST action
     [HttpPost]
-    public IActionResult Create(Pizza pizza)
-    {            
-        PizzaService.Add(pizza);
-        return CreatedAtAction(nameof(Get), new { id = pizza.Id }, pizza);
+    public Pizza Create( [FromBody] Pizza body)
+    {
+        
+        return this._service.Add(body);
     }
 
     // PUT action
@@ -48,11 +56,11 @@ public class PizzaController : ControllerBase
         if (id != pizza.Id)
             return BadRequest();
             
-        var existingPizza = PizzaService.Get(id);
+        var existingPizza = this._service.GetOne(id);
         if(existingPizza is null)
             return NotFound();
     
-        PizzaService.Update(pizza);           
+        this._service.Update(pizza);           
     
         return NoContent();
     }
@@ -61,12 +69,12 @@ public class PizzaController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var pizza = PizzaService.Get(id);
+        var pizza = this._service.GetOne(id);
     
         if (pizza is null)
             return NotFound();
         
-        PizzaService.Delete(id);
+        this._service.Delete(id);
     
         return NoContent();
     }

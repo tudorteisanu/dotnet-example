@@ -13,9 +13,9 @@ namespace Example.Controllers;
 public class PizzaController : ControllerBase
 {
     
-    private readonly IPizzaServiceInterface _service;  
+    private readonly IPizzaService _service;  
   
-    public PizzaController(IPizzaServiceInterface service)  
+    public PizzaController(IPizzaService service)  
     {  
         _service = service;  
     }  

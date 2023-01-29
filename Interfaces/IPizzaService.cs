@@ -2,7 +2,7 @@ using Example.Models;
 
 namespace example.Interfaces;
 
-public interface IPizzaServiceInterface
+public interface IPizzaService
 {
     Pizza? GetOne(int id);
     List<Pizza> GetAll();

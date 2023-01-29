@@ -3,7 +3,7 @@ using Example.Models;
 
 namespace Example.Services;
 
-public class PizzaService : IPizzaServiceInterface
+public class PizzaService : IPizzaService
 {
     private readonly MySQLDBContext _dbContext;  
     
